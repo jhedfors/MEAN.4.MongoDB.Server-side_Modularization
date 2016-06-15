@@ -21,6 +21,16 @@ module.exports = {
       }
     })
   },
+  edit: function(req,res){
+    Dog.findOne({_id:req.params.id}, function(err,results){
+      if (err) {
+        res.json(err)
+      }else{
+        // console.log (results.name)
+        res.render('edit',{dog:results})
+      }
+    })
+  },
   create: function(req,res){
     var dog = new Dog(req.body)
     dog.save(function(err){
@@ -41,20 +51,17 @@ module.exports = {
       }
     })
   },
-
-    // POST '/dogs/:id/destroy' Should delete the mongoose from the database by ID.
-    destroy: function(req,res){
-      console.log(req.params)
-      console.log('here',Dog.find({_id:req.params.id}))
-
-      Dog.remove({_id:req.params.id},function(err){
-        if (err) {
-          res.json(err)
-        }else{
-          res.redirect('/')
-        }
-
-      })
-    }
+  // POST '/dogs/:id/destroy' Should delete the mongoose from the database by ID.
+  destroy: function(req,res){
+    console.log(req.params)
+    console.log('here',Dog.find({_id:req.params.id}))
+    Dog.remove({_id:req.params.id},function(err){
+      if (err) {
+        res.json(err)
+      }else{
+        res.redirect('/')
+      }
+    })
+  }
 
 }
